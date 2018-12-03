@@ -1,0 +1,37 @@
+#include<iostream>
+#include<cmath>
+
+using namespace std;
+
+double square(double x, double h);
+double f(double x);
+double square_eps(double x, double *h);
+
+double a = 0.81, b = 1.762, s = 1.5, t = 1, eps = 10e-6;
+
+int main()
+{
+	double h = (b - a), sum = 0;
+	for (double i = a; i < b; i = i + h)
+	{
+		sum += square_eps(i, &h);
+	}
+	cout << sum << endl;
+	system("pause");
+	return 0;
+}
+
+double square_eps(double x, double *h)
+{
+	while (fabs(square(x, *h) - (square(x, *h / 2) + square(x+(*h/2), *h / 2))) > eps/((b-a)/(*h)))
+	{
+		*h /= 2;
+		
+	}
+	return square(x, *h);
+}
+
+double f(double x)
+{
+	return pow((1+x*x*x),2.0/3);
+}
